@@ -1,0 +1,27 @@
+name: Manual Tag Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name'
+        required: true
+
+jobs:
+  tag_repository:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set Git user
+        run: |
+          git config user.name "dreyabraham"
+          git config user.email "officialdrey123@gmail.com"
+
+      - name: Create tag
+        run: |
+          git tag ${{ github.event.inputs.tag_name }}
+          git push origin --tags
+
